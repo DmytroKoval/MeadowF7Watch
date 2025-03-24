@@ -1,0 +1,11 @@
+{
+  "profiles": {
+    "F7Watch": {
+      "commandName": "Project",
+      "nativeDebugging": true,
+      "remoteDebugEnabled": true,
+      "authenticationMode": "None",
+      "remoteDebugMachine": "127.0.0.1:4024"
+    }
+  }
+}
