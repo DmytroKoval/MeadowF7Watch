@@ -40,6 +40,8 @@ public class MeadowApp : App<F7FeatherV2>
         spi = Device.CreateSpiBus(Device.Pins.SCK, Device.Pins.COPI, Device.Pins.CIPO, spiConfig);
 
         display = new SDA5708(spi, Device.Pins.D00, Device.Pins.D01);
+        
+        display.SetBrightness(2);
 
         dispTimer = new Timer(DisplayTime, null, Timeout.Infinite, Timeout.Infinite);
 

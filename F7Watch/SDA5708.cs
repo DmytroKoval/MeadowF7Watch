@@ -85,7 +85,7 @@ namespace F7Watch
             // ccc - 000: 100% brightness, 001: 53%, 010: 40%, 011: 27%, 100: 20%, 101: 13%, 110: 7%, 111: 0%
             //
             // data transfer is least significant bit first
-            spiComms.Write(ReverseByte(0b11100010));
+            spiComms.Write(ReverseByte(0b11100110));
         }
 
         public void Reset()
@@ -93,6 +93,23 @@ namespace F7Watch
             resetPort.State = false;
             Task.Delay(2).Wait();
             resetPort.State = true;
+        }
+
+        /// <summary>
+        /// Adjusts the brightness level of display.
+        /// </summary>
+        /// <param name="brightness">
+        /// Specifies the brightness level to be adjusted, which is transformed before being sent. (0..7)
+        /// </param>
+        public void SetBrightness(int brightness, bool highBrightness = false)
+        {
+            int controlWord = (7 - (brightness & 0b111)) | 0x11101000;
+            
+            if (highBrightness)
+            {
+                controlWord &= ~0b00001000;
+            }
+            spiComms.Write(ReverseByte((byte)(controlWord & 0xFF)));
         }
 
         private void WriteChar(char ch, int place)
